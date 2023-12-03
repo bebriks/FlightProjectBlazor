@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "fM4IRGjWFCe16/Ivd96NU6Q1OnBuXwA28DRnK3jSTIhCgpDdYBKkj6WsLlw3MRQXYFLh89nQa1/Dxk8UUe0C4Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\1\\source\\repos\\FlightProjectBlazor\\BlazordemoApp1\\BlazordemoApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\1\\.nuget\\packages\\figmanet\\1.0.10\\figmanet.1.0.10.nupkg.sha512",
+    "C:\\Users\\1\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

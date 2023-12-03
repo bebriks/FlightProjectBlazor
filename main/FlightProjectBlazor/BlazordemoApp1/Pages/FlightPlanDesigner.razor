@@ -1,0 +1,84 @@
+﻿@page "/"
+@using BlazordemoApp1.Data
+@inject FlightPlanService flightPlanService
+
+
+<h1 style="width:fit-content; margin:0 auto; margin-bottom: 20px;">Flight Plan Designer</h1>
+<div class="flight-page">
+    <h2 style="margin-bottom:20px;">Add Flight Plan</h2>
+
+    <div class="add-stage">
+        <label for="course">Course:</label>
+        <input type="text" id="course" @bind="@newFlightPlan.Course" />
+
+        <label for="speed">Indicated Air Speed (m/s):</label>
+        <input type="number" id="speed" step="0.01" @bind="@newFlightPlan.IndicatedAirSpeed" />
+
+        <label for="altitude">True Altitude:</label>
+        <input type="number" id="altitude" @bind="@newFlightPlan.TrueAltitude" />
+        <div class="buttons">
+            <button class="button button-add" @onclick="AddFlightPlan">Add</button>
+            <button class="button" @onclick="DelFlightPlan">Clear All</button>
+        </div>
+    </div>
+    <h2>Current Flight Plan</h2>
+
+    @if (flightPlans == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="info-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Course</th>
+                        <th>IndicatedAirSpeed</th>
+                        <th>TrueAltitude</th>
+                    </tr>
+                </thead>
+                <tbody class="table-elements">
+                    @{int index = 1;}
+                
+                    @foreach (var flightPlan in flightPlans)
+                    {
+                        @if (flightPlan.Course != null && flightPlan.IndicatedAirSpeed != null && flightPlan.TrueAltitude != null)
+                        {
+                            <tr class="table-element">
+                                <td>@index</td>
+                                <td>@flightPlan.Course</td>
+                                <td>@flightPlan.IndicatedAirSpeed</td>
+                                <td>@flightPlan.TrueAltitude</td>
+                            </tr>
+                            index++;
+                        }
+                    }
+                </tbody>
+            </table>
+            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d69934.32592146858!2d60.723338649999995!3d56.78678595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sru!4v1700587609013!5m2!1sru!2sru" width="500" height="453" style="border:0;margin:0;padding:0;margin-top: 40px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    }
+</div>
+@code {
+    private List<FlightPlan> flightPlans;
+
+    private FlightPlan newFlightPlan = new FlightPlan();
+
+    protected override void OnInitialized()
+    {
+        flightPlans = flightPlanService.GetAllFlightPlans();
+    }
+
+    private void AddFlightPlan()
+    {
+        flightPlanService.AddFlightPlan(newFlightPlan);
+        newFlightPlan = new FlightPlan();
+        flightPlans = flightPlanService.GetAllFlightPlans();
+    }
+    public void DelFlightPlan()
+    {
+        flightPlans.Clear();
+    }
+}
